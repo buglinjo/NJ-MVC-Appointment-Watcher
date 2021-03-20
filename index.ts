@@ -7,7 +7,6 @@ import axios from 'axios';
 import * as moment from 'moment';
 
 async function run() {
-    console.log('Watcher service started...');
     for (const locationId of NjMvcConfig.locationIDs) {
         for (const serviceId of NjMvcConfig.serviceIDs) {
             for (const date of NjMvcConfig.getDatesForThisAndNextMonths()) {
@@ -35,4 +34,5 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+console.log('Watcher service started...');
 setInterval(run, 10000);
