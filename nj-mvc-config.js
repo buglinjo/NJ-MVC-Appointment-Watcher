@@ -2,7 +2,7 @@
 exports.__esModule = true;
 exports.NjMvcConfig = void 0;
 var _ = require("lodash");
-var _a = process.env, NJMVC_LOCATION_IDS = _a.NJMVC_LOCATION_IDS, NJMVC_SERVICE_IDS = _a.NJMVC_SERVICE_IDS, NJMVC_BASE_URL = _a.NJMVC_BASE_URL;
+var _a = process.env, NJMVC_LOCATION_IDS = _a.NJMVC_LOCATION_IDS, NJMVC_NUMBER_OF_MONTHS = _a.NJMVC_NUMBER_OF_MONTHS, NJMVC_SERVICE_IDS = _a.NJMVC_SERVICE_IDS, NJMVC_BASE_URL = _a.NJMVC_BASE_URL;
 var locations = [
     {
         "id": 102,
@@ -28,15 +28,17 @@ var NjMvcConfig = /** @class */ (function () {
             ? location.name
             : null;
     };
-    NjMvcConfig.getDatesForThisAndNextMonths = function () {
+    NjMvcConfig.getDates = function () {
         var date = new Date();
-        return [
-            new Date(date.getFullYear(), date.getMonth(), 1).toISOString(),
-            new Date(date.getFullYear(), date.getMonth() + 1, 1).toISOString(),
-        ];
+        var dates = [];
+        for (var i = 0; i < this.numberOfMonths; i++) {
+            dates.push(new Date(date.getFullYear(), date.getMonth() + i, 1).toISOString());
+        }
+        return dates;
     };
     NjMvcConfig.baseURL = NJMVC_BASE_URL !== null && NJMVC_BASE_URL !== void 0 ? NJMVC_BASE_URL : '';
     NjMvcConfig.serviceIDs = NJMVC_SERVICE_IDS ? NJMVC_SERVICE_IDS.split(',') : [];
+    NjMvcConfig.numberOfMonths = NJMVC_NUMBER_OF_MONTHS !== null && NJMVC_NUMBER_OF_MONTHS !== void 0 ? NJMVC_NUMBER_OF_MONTHS : 1;
     NjMvcConfig.locationIDs = NJMVC_LOCATION_IDS ? NJMVC_LOCATION_IDS.split(',') : [];
     return NjMvcConfig;
 }());

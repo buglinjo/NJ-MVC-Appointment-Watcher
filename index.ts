@@ -9,7 +9,7 @@ import * as moment from 'moment';
 async function run() {
     for (const locationId of NjMvcConfig.locationIDs) {
         for (const serviceId of NjMvcConfig.serviceIDs) {
-            for (const date of NjMvcConfig.getDatesForThisAndNextMonths()) {
+            for (const date of NjMvcConfig.getDates()) {
                 await sleep(1000);
                 let url = `${NjMvcConfig.baseURL}&locationId=${locationId}&appointmentId=${serviceId}&date=${date}`;
                 const response = await axios.get(url)
@@ -30,7 +30,7 @@ function sendTelegramMessage(message: string) {
     axios.post(`${process.env.TELEGRAM_BASE_URL}${process.env.TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${process.env.TELEGRAM_GROUP_ID}&text=${message}`)
 }
 
-function sleep(ms) {
+function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-const {NJMVC_LOCATION_IDS, NJMVC_SERVICE_IDS, NJMVC_BASE_URL} = process.env;
+const {NJMVC_LOCATION_IDS, NJMVC_NUMBER_OF_MONTHS, NJMVC_SERVICE_IDS, NJMVC_BASE_URL} = process.env;
 
 const locations = [
     {
@@ -20,6 +20,7 @@ const locations = [
 class NjMvcConfig {
     static baseURL: string = NJMVC_BASE_URL ?? '';
     static serviceIDs = NJMVC_SERVICE_IDS ? NJMVC_SERVICE_IDS.split(',') : [];
+    static numberOfMonths = NJMVC_NUMBER_OF_MONTHS ?? 1;
     static locationIDs = NJMVC_LOCATION_IDS ? NJMVC_LOCATION_IDS.split(',') : [];
 
     static getLocationNameByIds(id: string): string | null {
@@ -32,13 +33,22 @@ class NjMvcConfig {
             : null;
     }
 
-    static getDatesForThisAndNextMonths(): string[] {
+    static getDates(): string[] {
         const date = new Date();
 
-        return [
-            new Date(date.getFullYear(), date.getMonth(), 1).toISOString(),
-            new Date(date.getFullYear(), date.getMonth() + 1, 1).toISOString(),
-        ];
+        let dates = [];
+
+        for (let i = 0; i < this.numberOfMonths; i++) {
+            dates.push(
+                new Date(
+                    date.getFullYear(),
+                    date.getMonth() + i,
+                    1
+                ).toISOString()
+            );
+        }
+
+        return dates;
     }
 }
 

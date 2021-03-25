@@ -57,7 +57,7 @@ function run() {
                 case 2:
                     if (!(_b < _c.length)) return [3 /*break*/, 8];
                     serviceId = _c[_b];
-                    _d = 0, _e = nj_mvc_config_1.NjMvcConfig.getDatesForThisAndNextMonths();
+                    _d = 0, _e = nj_mvc_config_1.NjMvcConfig.getDates();
                     _f.label = 3;
                 case 3:
                     if (!(_d < _e.length)) return [3 /*break*/, 7];
@@ -72,10 +72,10 @@ function run() {
                     if (response.data.length !== 0) {
                         humanMonth = moment(date).format('MMMM');
                         sendTelegramMessage("Appointment time is available in " + nj_mvc_config_1.NjMvcConfig.getLocationNameByIds(locationId) + " in " + humanMonth + ". Response: " + JSON.stringify(response.data));
-                        console.log("Available time found for: [" + locationId + ", " + serviceId + "], " + date);
+                        console.log("Available time found for: [" + locationId + ", " + serviceId + ", " + date + "]");
                     }
                     else {
-                        console.log("No available dates for: [" + locationId + ", " + serviceId + "], " + date);
+                        console.log("No available dates for: [" + locationId + ", " + serviceId + ", " + date + "]");
                     }
                     _f.label = 6;
                 case 6:
@@ -98,4 +98,5 @@ function sendTelegramMessage(message) {
 function sleep(ms) {
     return new Promise(function (resolve) { return setTimeout(resolve, ms); });
 }
+console.log('Watcher service started...');
 setInterval(run, 10000);
